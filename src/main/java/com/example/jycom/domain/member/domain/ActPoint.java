@@ -1,15 +1,9 @@
-package com.example.jycom.model.member;
+package com.example.jycom.domain.member.domain;
 
 import lombok.Getter;
 
-enum memberGrade {
-    FOOT,
-    BODY,
-    HEAD,
-}
-
 @Getter
-enum actPoint {
+public enum ActPoint {
     WRITE(5),
     READ(3),
     COMMENT(1),
@@ -17,8 +11,7 @@ enum actPoint {
 
     private final int point;
 
-    actPoint(int point) {
+    ActPoint(int point) {
         this.point = point;
     }
-
 }

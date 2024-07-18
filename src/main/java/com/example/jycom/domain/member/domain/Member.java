@@ -1,11 +1,12 @@
-package com.example.jycom.model.member;
+package com.example.jycom.domain.member.domain;
 
+import com.example.jycom.global.common.ComDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Member {
+public class Member extends ComDTO {
 
     private String id;
     private String name;
