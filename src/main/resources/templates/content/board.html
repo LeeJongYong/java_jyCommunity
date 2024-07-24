@@ -5,7 +5,7 @@
       layout:decorate="~{default}">
 
 <th:block layout:fragment="head">
-    <title>Spring Boot</title>
+    <title>jy-com</title>
 
     <!--/* css */-->
 <!--    <link th:href="~{/css/common.css}" rel="stylesheet" />-->
@@ -14,7 +14,26 @@
 <th:block layout:fragment="header" th:include="~{/fragment/header}"></th:block>
 
 <div layout:fragment="content" class="content">
-    <h2>This is Content</h2>
+    <h1>jy-Community</h1>
+    <table class="board">
+        <tr>
+            <th>No</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>등록일</th>
+        </tr>
+        <tr th:each="board : ${itemMap.boardList}">
+            <td th:text="${board.index}">번호</td>
+            <td><a href="#" th:text="${board.subject}">제목</a></td>
+            <td th:text="${board.author}">작성자</td>
+            <td th:text="${board.cretDt}">등록일</td>
+        </tr>
+    </table>
+    <div>
+        <div>
+            <button onclick="localtion.href='addForm.html'">글 등록</button>
+        </div>
+    </div>
 </div>
 
 <th:block layout:fragment="footer" th:include="~{/fragment/footer}"></th:block>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<th:block layout:fragment="head">
+    <title>jy-com</title>
+
+    <!--/* css */-->
+    <!--    <link th:href="~{/css/common.css}" rel="stylesheet" />-->
+</th:block>
+<div layout:fragment="content" class="content">
+    <h1>글 작성하기</h1>
+    <form th:action="/jycom/board/write" th:object="${board}" method="post">
+        <div>
+            <label>제목</label>
+            <input type="text" id="subject" th:field="*{subject}" placeholder="제목을 입력하세요.">
+        </div>
+        <div>
+            <label>작성자</label>
+            <input type="text" id="author" th:field="*{author}" placeholder="작성자를 입력하세요.">
+        </div>
+        <div>
+            <label>내용</label>
+            <textarea cols="150" rows="10" id="content" th:field="*{content}" placeholder="내용을 입력하세요."></textarea>
+        </div>
+        <button type="submit">저장</button>
+    </form>
+</div>
+</html>
