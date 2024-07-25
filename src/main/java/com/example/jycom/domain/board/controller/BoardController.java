@@ -29,8 +29,7 @@ public class BoardController {
     }
 
     @GetMapping
-    public String boardAll(Model model)
-    {
+    public String boardAll(Model model) {
         logger.info("board 진입");
 
         boardService.boardAll(model);
@@ -38,24 +37,28 @@ public class BoardController {
         return "content/board";
     }
 
-    @PostMapping("/write")
-    public String write(@ModelAttribute("board") Board board) {
+    @GetMapping("/write")
+    public String write(Model model){
+        logger.info("board write 진입");
 
-        logger.info("board 글 작성");
+        model.addAttribute("board", new Board());
+
+        return "content/addForm";
+    }
+
+    @PostMapping("/write")
+    public String write(Model model, @ModelAttribute("board") Board board) {
+
+        logger.info("board write 작성");
 
         boardService.write(board);
-
-        Model model = new ConcurrentModel();
-
         boardService.boardAll(model);
 
         return "content/board";
     }
 
     @DeleteMapping("/remove")
-    public String remove(@ModelAttribute("board") Board board) {
-
-        Model model = new ConcurrentModel();
+    public String remove(Model model, @ModelAttribute("board") Board board) {
 
         boardService.remove(board);
         boardService.boardAll(model);

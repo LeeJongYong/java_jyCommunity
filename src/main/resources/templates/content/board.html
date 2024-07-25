@@ -23,15 +23,15 @@
             <th>등록일</th>
         </tr>
         <tr th:each="board : ${itemMap.boardList}">
-            <td th:text="${board.index}">번호</td>
+            <td th:text="${board.id}">번호</td>
             <td><a href="#" th:text="${board.subject}">제목</a></td>
-            <td th:text="${board.author}">작성자</td>
-            <td th:text="${board.cretDt}">등록일</td>
+            <td th:text="${board.userid}">작성자</td>
+            <td th:text="${board.createdDt}">등록일</td>
         </tr>
     </table>
     <div>
         <div>
-            <button onclick="localtion.href='addForm.html'">글 등록</button>
+            <button th:onclick="|location.href='@{/jycom/board/write}'|">글 등록</button>
         </div>
     </div>
 </div>
