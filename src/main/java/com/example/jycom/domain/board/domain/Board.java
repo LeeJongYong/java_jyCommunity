@@ -24,7 +24,7 @@ public class Board extends ComDTO {
 
     @Id
     // 글번호
-    String index;
+    String id;
     // 제목
     @Column(nullable = false)
     String subject;

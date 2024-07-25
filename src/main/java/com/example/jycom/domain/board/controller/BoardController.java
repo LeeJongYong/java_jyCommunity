@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +29,11 @@ public class BoardController {
     }
 
     @GetMapping
-    public String boardMain(Model model)
+    public String boardAll(Model model)
     {
         logger.info("board 진입");
 
-        boardService.BoardRetv(model);
+        boardService.boardAll(model);
 
         return "content/board";
     }
@@ -44,7 +45,21 @@ public class BoardController {
 
         boardService.write(board);
 
+        Model model = new ConcurrentModel();
+
+        boardService.boardAll(model);
+
         return "content/board";
     }
 
+    @DeleteMapping("/remove")
+    public String remove(@ModelAttribute("board") Board board) {
+
+        Model model = new ConcurrentModel();
+
+        boardService.remove(board);
+        boardService.boardAll(model);
+
+        return "content/board";
+    }
 }

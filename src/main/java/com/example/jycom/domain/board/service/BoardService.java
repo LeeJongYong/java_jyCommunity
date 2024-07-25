@@ -26,30 +26,25 @@ public class BoardService {
         this.boardDao = boardDao;
     }
 
-    public void BoardRetv(Model model){
+    public void boardAll (Model model){
 
         Map<String, Object> itemMap = new HashMap<String, Object>();
-
         List<Board> boardList = new ArrayList<Board>();
 
-        Board board1 = new Board();
-        board1.setIndex("1");
-        board1.setSubject("first Write");
-        board1.setAuthor("first");
-        board1.setCreatedDt(LocalDateTime.now());
-
-        boardList.add(board1);
-
-        logger.info("board1 index : " + board1.getIndex());
+        boardList.addAll(boardDao.findAll());
 
         itemMap.put("boardList", boardList);
 
         model.addAttribute("itemMap", itemMap);
+
     }
 
-    public void write(Board board) {
-
+    public void write (Board board) {
         boardDao.save(board);
+    }
 
+
+    public void remove (Board board) {
+        boardDao.deleteById(board.getId());
     }
 }
