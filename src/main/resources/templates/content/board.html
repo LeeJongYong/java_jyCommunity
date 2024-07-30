@@ -22,9 +22,9 @@
             <th>작성자</th>
             <th>등록일</th>
         </tr>
-        <tr th:each="board : ${itemMap.boardList}">
+        <tr th:each="board : ${boardList}">
             <td th:text="${board.id}">번호</td>
-            <td><a href="#" th:text="${board.subject}">제목</a></td>
+            <td><a th:href="@{/jycom/board/read(id=${board.id})}" th:text="${board.subject}">제목</a></td>
             <td th:text="${board.userid}">작성자</td>
             <td th:text="${board.createdDt}">등록일</td>
         </tr>

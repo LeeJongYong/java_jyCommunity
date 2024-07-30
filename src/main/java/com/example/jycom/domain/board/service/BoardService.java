@@ -5,14 +5,12 @@ import com.example.jycom.domain.board.domain.Board;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BoardService {
@@ -26,16 +24,17 @@ public class BoardService {
         this.boardDao = boardDao;
     }
 
-    public void boardAll (Model model){
+    public void boardAll (Model model, Pageable pageable){
 
-        Map<String, Object> itemMap = new HashMap<String, Object>();
         List<Board> boardList = new ArrayList<Board>();
 
-        boardList.addAll(boardDao.findAll());
+        Page<Board> boards = boardDao.findAll(pageable);
 
-        itemMap.put("boardList", boardList);
+        boardList.addAll(boards.getContent());
 
-        model.addAttribute("itemMap", itemMap);
+
+
+        model.addAttribute("boardList", boardList);
 
     }
 
@@ -44,7 +43,16 @@ public class BoardService {
     }
 
 
-    public void remove (Board board) {
-        boardDao.deleteById(board.getId());
+    public void remove (String id) {
+        boardDao.deleteById(id);
+    }
+
+    public Board read(String id) {
+        return boardDao.findById(id).orElseThrow(NoSuchElementException::new);
+    }
+
+    public Board modify(Board board) {
+        boardDao.save(board);
+        return boardDao.findById(board.getId()).orElseThrow(NoSuchElementException::new);
     }
 }

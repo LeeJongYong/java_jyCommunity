@@ -5,15 +5,12 @@ import com.example.jycom.domain.board.service.BoardService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/jycom/board")
@@ -29,10 +26,10 @@ public class BoardController {
     }
 
     @GetMapping
-    public String boardAll(Model model) {
+    public String boardAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         logger.info("board 진입");
 
-        boardService.boardAll(model);
+        boardService.boardAll(model, pageable);
 
         return "content/board";
     }
@@ -47,21 +44,47 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(Model model, @ModelAttribute("board") Board board) {
+    public String write(Model model, @ModelAttribute("board") Board board, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 
         logger.info("board write 작성");
 
         boardService.write(board);
-        boardService.boardAll(model);
+        boardService.boardAll(model, pageable);
 
         return "content/board";
     }
 
-    @DeleteMapping("/remove")
-    public String remove(Model model, @ModelAttribute("board") Board board) {
+    @GetMapping("/read")
+    public String read(@RequestParam("id") String id, Model model) {
 
-        boardService.remove(board);
-        boardService.boardAll(model);
+        logger.info("id chk : " + id);
+        model.addAttribute("board", boardService.read(id));
+
+        return "content/readForm";
+    }
+
+    @GetMapping("/modify")
+    public String modify(@RequestParam("id") String id, Model model) {
+
+        logger.info("id chk : " + id);
+        model.addAttribute("board", boardService.read(id));
+
+        return "content/modifyForm";
+    }
+
+    @PostMapping("modify")
+    public String modify(Model model, @ModelAttribute("board") Board board) {
+
+        model.addAttribute("board", boardService.modify(board));
+
+        return "content/readForm";
+    }
+
+    @GetMapping ("/remove")
+    public String remove(@RequestParam("id") String id, Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        boardService.remove(id);
+        boardService.boardAll(model, pageable);
 
         return "content/board";
     }
