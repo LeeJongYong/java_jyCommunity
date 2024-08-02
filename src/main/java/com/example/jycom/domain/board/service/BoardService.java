@@ -6,7 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -26,13 +28,14 @@ public class BoardService {
 
     public void boardAll (Model model, Pageable pageable){
 
-        List<Board> boardList = new ArrayList<Board>();
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() -1) ;
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
 
-        Page<Board> boards = boardDao.findAll(pageable);
+        Page<Board> boardList = boardDao.findAll(pageable);
 
-        boardList.addAll(boards.getContent());
-
-
+        logger.info("총 element 수 : {}, 전체 page 수 : {}, 페이지에 표시할 element 수 : {}, 현재 페이지 index : {}, 현재 페이지의 element 수 : {}",
+                boardList.getTotalElements(), boardList.getTotalPages(), boardList.getSize(),
+                boardList.getNumber(), boardList.getNumberOfElements());
 
         model.addAttribute("boardList", boardList);
 

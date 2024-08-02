@@ -26,7 +26,7 @@ public class BoardController {
     }
 
     @GetMapping
-    public String boardAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String boardAll(Model model, @PageableDefault Pageable pageable) {
         logger.info("board 진입");
 
         boardService.boardAll(model, pageable);
