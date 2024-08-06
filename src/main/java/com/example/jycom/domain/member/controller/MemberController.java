@@ -6,11 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("/jycom/member")
 public class MemberController {
 
     private final MemberService memberService;
@@ -29,14 +31,28 @@ public class MemberController {
         return "content/board";
     }
 
-    public void signIn(){
-        Member member = new Member();
-        memberService.signIn(member);
+    @RequestMapping(value = "/signIn", method = RequestMethod.GET)
+    public String signIn(){
+        return "member/signIn";
     }
 
-    public void signUp(){
-        Member member = new Member();
-        memberService.singUp(member);
+    // 로그인
+    @RequestMapping(value = "/signIn", method = RequestMethod.POST)
+    public String signIn(Model model, @ModelAttribute("member")Member member){
+        memberService.signIn(model, member);
+        return "content/board";
+    }
+
+    @RequestMapping(value = "/signUp", method = RequestMethod.GET )
+    public String signUp(){
+        return "member/signUp";
+    }
+
+    // 회원가입
+    @RequestMapping(value = "/signUp", method = RequestMethod.POST )
+    public String signUp(Model model, @ModelAttribute("member")Member member){
+        memberService.singUp(model, member);
+        return "member/signIn";
     }
 
 }
