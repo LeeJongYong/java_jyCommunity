@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -20,18 +21,18 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class Member extends ComDTO {
 
     @Id
-    private String id;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String password;
-    @Id
-    private String email;
+    String id;
     @Column
-    private String phone;
+    String name;
     @Column
-    private String grade;
+    String password;
     @Column
-    private int point;
+    String email;
+    @Column
+    String phone;
+    @Column
+    String grade;
+    @Column
+    int point;
 
 }

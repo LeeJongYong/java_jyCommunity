@@ -1,6 +1,6 @@
 package com.example.jycom.domain.member.domain;
 
-public enum memberGrade {
+public enum MemberGrade {
     EGG,
     CHICK,
     CHICKEN,

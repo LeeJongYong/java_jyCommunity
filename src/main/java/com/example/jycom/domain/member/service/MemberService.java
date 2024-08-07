@@ -2,6 +2,7 @@ package com.example.jycom.domain.member.service;
 
 import com.example.jycom.domain.member.dao.MemberDao;
 import com.example.jycom.domain.member.domain.Member;
+import com.example.jycom.domain.member.domain.MemberGrade;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class MemberService {
 
         Member res = new Member();
 
-        res = memberDao.findById(member.getId()).orElseThrow(NoSuchElementException::new);
+        res = memberDao.findByEmail(member.getEmail());
 
         model.addAttribute("member", res);
 
@@ -45,11 +46,13 @@ public class MemberService {
         }
         else{
             member.setId(UUID.randomUUID().toString());
+            member.setGrade(MemberGrade.EGG.toString());
             memberDao.save(member);
             res = "회원가입을 축하합니다.";
         }
 
-        model.addAttribute("member", res);
+        model.addAttribute("resMsg", res);
+        model.addAttribute("member", new Member());
 
     }
 
