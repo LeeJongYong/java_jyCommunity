@@ -1,5 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <div class="header">
     <h2>Header</h2>
+    <div>
+        <button type="button" th:onclick="|location.href='@{/jycom/member/myPage(email=${member.email})}'|">myPage</button>
+    </div>
 </div>
 </html>

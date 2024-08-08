@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/jycom/member")
@@ -61,6 +62,13 @@ public class MemberController {
         log.info("signUp 실행");
         memberService.singUp(model, member);
         return "member/signIn";
+    }
+
+    @RequestMapping(value = "/myPage", method = RequestMethod.GET)
+    public String myPage(Model model, @RequestParam("email") String email){
+        log.info("myPage 화면 진입");
+        memberService.myInfo(model, email);
+        return "member/myPage";
     }
 
 }

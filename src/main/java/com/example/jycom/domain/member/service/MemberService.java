@@ -47,6 +47,7 @@ public class MemberService {
         else{
             member.setId(UUID.randomUUID().toString());
             member.setGrade(MemberGrade.EGG.toString());
+            member.setPoint(0);
             memberDao.save(member);
             res = "회원가입을 축하합니다.";
         }
@@ -57,4 +58,13 @@ public class MemberService {
     }
 
 
+    public void myInfo(Model model, String email) {
+
+        Member res = new Member();
+
+        res = memberDao.findByEmail(email);
+
+        model.addAttribute("member", res);
+
+    }
 }
